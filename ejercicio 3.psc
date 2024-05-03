@@ -1,15 +1,8 @@
 Proceso ejercicio3
-	//Declaracion
-	Definir  w, cuadradopot Como Entero;
-	
-	//Proceso
-	cuadradopot <- 0;
-	
-	Para w <- 1 hasta 100 con paso 1 Hacer
-		cuadradopot <- cuadradopot + (w*w);
-	FinPara
-	
-	//Salida
-	Escribir "La suma de los cuadrados es de: ", cuadradopot;
-	
+		Definir suma, i como Entero;
+		suma <- 0;
+		Para i <- 0 Hasta 100 Con Paso 1 Hacer
+			suma <- suma + i ^ 2;
+		FinPara
+		Escribir "La suma de los cuadrados de todos los números entre 1 y 100 es ", suma;
 FinProceso
