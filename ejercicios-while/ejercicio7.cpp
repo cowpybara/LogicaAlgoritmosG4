@@ -11,8 +11,9 @@ int sumadevectores[MAX];
 
 void ingresar()
 {
+    int w = 0;
     int num1, num2;
-    for (int w = 0; w < MAX; w++)
+    while (w < MAX)
     {
         cout << "Ingresar numero " << w + 1 << " a vector 1: ";
         cin >> num1;
@@ -20,18 +21,24 @@ void ingresar()
         cout << "Ingresar numero " << w + 1 << " a vector 2: ";
         cin >> num2;
         vector2[w] = num2;
+        w++;
     }
 }
 
 void sumar()
 {
-    for (int w = 0; w < MAX; w++)
+    int w = 0;
+    while (w < MAX)
     {
         sumadevectores[w] = vector1[w] + vector2[w];
+        w++;
     }
+}
 
-    cout << "\nLa suma de vectores es: ";
-    for (int w = 0; w < MAX; w++)
+void mostrar() {
+    int w = 0;
+    cout << "\nLa suma de vectores es: {";
+    while (w < MAX)
     {
         if (w == MAX - 1)
         {
@@ -41,13 +48,15 @@ void sumar()
         {
             cout << sumadevectores[w] << ", ";
         }
+
+        w++;
     }
 }
 
-main()
+int main()
 {
     int opcion;
-    cout << "1. Ingresar numeros a vectores" << endl;
+    cout << "\n1. Ingresar numeros a vectores" << endl;
     cout << "2. Sumar vectores" << endl;
     cout << "3. Salir" << endl;
     cout << "Opcion: ";
@@ -60,9 +69,10 @@ main()
         break;
     case 2:
         sumar();
+        mostrar();
         break;
     case 3:
-
+    
         break;
     default:
         cout << "Opcion invalida..." << endl;
@@ -73,4 +83,5 @@ main()
     {
         main();
     }
+    
 }

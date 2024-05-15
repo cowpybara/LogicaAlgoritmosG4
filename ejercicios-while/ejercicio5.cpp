@@ -4,6 +4,7 @@ permita calcular y dar como salida lo siguiente:
 ✓ Cantidad de alumnos reprobados
 ✓ Promedio general del grupo
 Nota mínima para aprobar: 70*/
+
 #include <iostream>
 
 using namespace std;
@@ -13,9 +14,10 @@ void promedio()
     int alumnos = 8;
     float sumanota = 0, promedio = 0, nota;
 
-    for (int w = 1; w <= alumnos; w++)
+    int i = 1;
+    while (i <= alumnos)
     {
-        cout << "Ingrese la nota del estudiante" << w << endl;
+        cout << "Ingrese la nota del estudiante" << i << endl;
         cin >> nota;
         if (nota >= 70)
         {
@@ -26,7 +28,8 @@ void promedio()
             cout << "El estudiante esta reprobado." << endl;
         }
         sumanota += nota;
-        promedio = sumanota / 8;
+        promedio = sumanota / alumnos;
+        i++;
     }
     cout << "El promedio general del curso es: " << promedio;
 }

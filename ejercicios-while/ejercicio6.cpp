@@ -7,13 +7,15 @@ using namespace std;
 void sumar()
 {
     int suma = 0;
-    for (int w = 100; w <= 200; w++)
+    int i = 100;
+    while (i <= 200)
     {
-        if (w % 2 == 0)
+        if (i % 2 == 0)
         {
-            cout << w << endl;
-            suma += w;
+            cout << i << endl;
+            suma += i;
         }
+        i++;
     }
     cout << "La suma de los numeros pares entre 100 y 200: " << suma << endl;
 }
