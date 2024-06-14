@@ -19,6 +19,7 @@ void mostrarTodo();
 void editar();
 void eliminar();
 void buscar();
+void showData(CITY &city);
 int menu();
 void principal();
 
@@ -125,6 +126,10 @@ void pedirDato()
     cout << "Datos de la Ciudad" << endl;
     cout << "ID: ";
     cin >> city.id;
+    if(findPos(city.id) == -1) {
+        cout << "Registro ya existe..." << endl;                                         
+        return;
+    }
     cout << "NOMBRE: ";
     scanf(" %[^\n]", city.name);
     cout << "DESCRIPCION: ";
@@ -137,9 +142,7 @@ void mostrarTodo()
     cout << "Mostrar Registros\n";
     for (int i = 0; i < pos; i++)
     {
-        cout << cities[i].id << endl;
-        cout << cities[i].name << endl;
-        cout << cities[i].description << endl;
+        showData(cities[i]);
     }
 }
 
@@ -149,6 +152,10 @@ void editar()
     int id;
     cout << "ID: ";
     cin >> id;
+    if(findPos(id) == -1) {
+        cout << "Registro no encontrado..." << endl;
+        return;
+    }
     city = findCity(id);
     cout << "Nombre: ";
     scanf(" %[^\n]", city.name);
@@ -161,8 +168,17 @@ void editar()
 void eliminar()
 {
     int id;
+    if(pos == 0) {
+        cout << "No hay registros disponibles para eliminar..." << endl;
+        return;
+    }
     cout << "ID de la ciudad que desea eliminar: ";
     cin >> id;
+    if(findPos(id) == -1) {
+        cout << "Registro no existe..." << endl;
+        cout << "Intentalo de nuevo." << endl;                                          
+        return;
+    }
     destroyCity(id);
     cout << "Registro eliminado... \n";
 }
@@ -172,9 +188,20 @@ void buscar()
     int id;
     cout << "ID: ";
     cin >> id;
+    if(findPos(id) == -1) {
+        cout << "Registro no encontrado..." << endl;                                
+        return;
+    }
     CITY city = findCity(id);
     cout << "Registro encontrado: \n";
     cout << city.id << endl;
     cout << city.name << endl;
     cout << city.description << endl;
 }
+
+void showData(CITY &city) {
+    cout << "ID: " << city.id << endl;
+    cout << "Nombre: " << city.name << endl;
+    cout << "Descripcion: " << city.description << endl;
+}
+

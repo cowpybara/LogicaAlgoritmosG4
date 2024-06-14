@@ -2,7 +2,7 @@
 
 using namespace std;
 
- struct CITY{
+struct CITY{
     int id;
     char name[30];
     char description[100];
