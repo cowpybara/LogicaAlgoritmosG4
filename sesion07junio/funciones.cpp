@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string.h>
 #include "variables.h"
+#include <fstream>
+#include <cstdlib>
 using namespace std;
 
 CITY cities[MAX_REG];
@@ -22,6 +24,10 @@ void buscar();
 void showData(CITY &city);
 int menu();
 void principal();
+
+// manejo de archivos
+int loadCities();
+void writeFile(const CITY &city);
 
 void addCity(CITY *city)
 {
@@ -89,6 +95,7 @@ int menu()
 void principal()
 {
     int op;
+    int pos = loadCities();
     do
     {
         op = menu();
@@ -126,8 +133,9 @@ void pedirDato()
     cout << "Datos de la Ciudad" << endl;
     cout << "ID: ";
     cin >> city.id;
-    if(findPos(city.id) == -1) {
-        cout << "Registro ya existe..." << endl;                                         
+    if (findPos(city.id) != -1)
+    {
+        cout << "Registro ya existe..." << endl;
         return;
     }
     cout << "NOMBRE: ";
@@ -135,6 +143,7 @@ void pedirDato()
     cout << "DESCRIPCION: ";
     scanf(" %[^\n]", city.description);
     addCity(&city);
+    writeFile(city);
 }
 
 void mostrarTodo()
@@ -152,7 +161,8 @@ void editar()
     int id;
     cout << "ID: ";
     cin >> id;
-    if(findPos(id) == -1) {
+    if (findPos(id) == -1)
+    {
         cout << "Registro no encontrado..." << endl;
         return;
     }
@@ -168,15 +178,17 @@ void editar()
 void eliminar()
 {
     int id;
-    if(pos == 0) {
+    if (pos == 0)
+    {
         cout << "No hay registros disponibles para eliminar..." << endl;
         return;
     }
     cout << "ID de la ciudad que desea eliminar: ";
     cin >> id;
-    if(findPos(id) == -1) {
+    if (findPos(id) == -1)
+    {
         cout << "Registro no existe..." << endl;
-        cout << "Intentalo de nuevo." << endl;                                          
+        cout << "Intentalo de nuevo." << endl;
         return;
     }
     destroyCity(id);
@@ -188,8 +200,9 @@ void buscar()
     int id;
     cout << "ID: ";
     cin >> id;
-    if(findPos(id) == -1) {
-        cout << "Registro no encontrado..." << endl;                                
+    if (findPos(id) == -1)
+    {
+        cout << "Registro no encontrado..." << endl;
         return;
     }
     CITY city = findCity(id);
@@ -199,9 +212,46 @@ void buscar()
     cout << city.description << endl;
 }
 
-void showData(CITY &city) {
+void showData(CITY &city)
+{
     cout << "ID: " << city.id << endl;
     cout << "Nombre: " << city.name << endl;
     cout << "Descripcion: " << city.description << endl;
+}
+
+int loadCities()
+{
+    ifstream archivo("cities.txt");
+    if (archivo.fail())
+    {
+        return 0;
+    }
+    int i = 0;
+    while (archivo >> cities[i].id)
+    {
+        archivo.ignore();
+        archivo.getline(cities[i].name, 30);
+        archivo.getline(cities[i].description, 100);
+        i++;
+    }
+    archivo.close();
+    return i;
+}
+void writeFile(const CITY &city)
+{
+    ofstream archivo;
+
+    archivo.open("cities.txt", ios::app);
+
+    if (archivo.fail())
+    {
+        cout << "No se pudo abrir el archivo tierno." << endl;
+        exit(1); // retunr
+    }
+
+    archivo << city.id << endl;
+    archivo << city.name << endl;
+    archivo << city.description << endl;
+    archivo.close();
 }
 
